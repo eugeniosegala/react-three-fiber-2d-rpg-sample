@@ -5,10 +5,11 @@ import useSound from "use-sound";
 import { coin } from "../utils/textures";
 import coinSound from "../sounds/coin.wav";
 
-const TriggerInternal = ({ args, position, collisions, setCollisions }) => {
+const TriggerInternal = ({ position, collisions, setCollisions }) => {
   const [ref] = useBox(() => ({
     isTrigger: true,
-    args,
+    fixedRotation: true,
+    args: [0.5, 0.5, 0.5],
     position,
     onCollide: handleOnCollide,
   }));
@@ -25,7 +26,7 @@ const TriggerInternal = ({ args, position, collisions, setCollisions }) => {
   );
 };
 
-const Trigger = ({ args, position }) => {
+const Trigger = ({ position }) => {
   const [collisions, setCollisions] = useState(0);
   const [play] = useSound(coinSound);
 
@@ -41,7 +42,6 @@ const Trigger = ({ args, position }) => {
 
   return (
     <TriggerInternal
-      args={args}
       position={position}
       collisions={collisions}
       setCollisions={setCollisions}
