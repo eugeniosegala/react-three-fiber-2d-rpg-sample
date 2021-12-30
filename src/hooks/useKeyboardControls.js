@@ -32,8 +32,8 @@ export const useKeyboardControls = () => {
   });
 
   useEffect(() => {
+    // Primary movements
     const handleKeyDown = (e) => {
-      // Movement key
       if (actionByKey(e.code)) {
         setMovement((state) => ({
           ...state,
@@ -43,6 +43,7 @@ export const useKeyboardControls = () => {
         }));
       }
     };
+    // Used to reset keys
     const handleKeyUp = (e) => {
       if (actionByKey(e.code)) {
         setMovement((state) => ({

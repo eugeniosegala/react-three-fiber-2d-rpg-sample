@@ -14,7 +14,7 @@ const SampleLevel = () => {
     moveBackward,
     moveLeft,
     moveRight,
-    lastMovement,
+    // lastMovement,
     tileMovement,
   } = useKeyboardControls();
 
@@ -46,6 +46,12 @@ const SampleLevel = () => {
       <Trigger position={[0, 0.5, 7]} />
       <Trigger position={[1, 0.5, 7]} />
       <Trigger position={[2, 0.5, 7]} />
+      <Trigger position={[0, 0.5, 8]} />
+      <Trigger position={[1, 0.5, 8]} />
+      <Trigger position={[2, 0.5, 8]} />
+      <Trigger position={[0, 0.5, 9]} />
+      <Trigger position={[1, 0.5, 9]} />
+      <Trigger position={[2, 0.5, 9]} />
       <Object
         mass={1}
         position={[10, 0.5, 20]}

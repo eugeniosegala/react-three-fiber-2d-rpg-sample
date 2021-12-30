@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useBox } from "@react-three/cannon";
-import useSound from "use-sound";
 
 import { coin } from "../utils/textures";
 import coinSound from "../sounds/coin.wav";
 
-const TriggerInternal = ({ position, collisions, setCollisions }) => {
+const TriggerInternal = ({ position, setCollisions }) => {
+  const ping = new Audio(coinSound);
+
   const [ref] = useBox(() => ({
     isTrigger: true,
     fixedRotation: true,
@@ -14,7 +15,8 @@ const TriggerInternal = ({ position, collisions, setCollisions }) => {
     onCollide: handleOnCollide,
   }));
 
-  const handleOnCollide = () => {
+  const handleOnCollide = async () => {
+    await ping.play();
     setCollisions(1);
   };
 
@@ -28,13 +30,6 @@ const TriggerInternal = ({ position, collisions, setCollisions }) => {
 
 const Trigger = ({ position }) => {
   const [collisions, setCollisions] = useState(0);
-  const [play] = useSound(coinSound);
-
-  useEffect(() => {
-    if (collisions === 1) {
-      play();
-    }
-  }, [collisions]);
 
   if (collisions > 0) {
     return null;

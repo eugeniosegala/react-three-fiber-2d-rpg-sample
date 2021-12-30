@@ -1,6 +1,6 @@
+import { Vector3 } from "three";
 import { useBox } from "@react-three/cannon";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Vector3 } from "three";
 
 import {
   playerUpMovement,
@@ -14,7 +14,7 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
   const [ref, api] = useBox(() => ({
     fixedRotation: true,
     mass: 1,
-    position: [0, 0.5, 0]
+    position: [0, 0.5, 0],
   }));
 
   const { camera } = useThree();
@@ -42,7 +42,6 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
   // console.log(moveForward, moveBackward, moveLeft, moveRight);
 
   const calculateImage = () => {
-
     if (moveForward) {
       return playerUpMovement;
     }
@@ -65,10 +64,7 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
   return (
     <mesh ref={ref} name="Player">
       <boxGeometry />
-      <meshStandardMaterial
-        transparent={true}
-        map={calculateImage()}
-      />
+      <meshStandardMaterial transparent={true} map={calculateImage()} />
     </mesh>
   );
 };
