@@ -18,7 +18,7 @@ const SampleLevel = () => {
     tileMovement,
   } = useKeyboardControls();
 
-  const [colour, setColour] = useState("green");
+  const [colour, setColour] = useState("#7E370C");
 
   // console.log(
   //   moveForward,
@@ -51,7 +51,7 @@ const SampleLevel = () => {
         position={[10, 0.5, 20]}
         onCollide={(e) => {
           if (e.body.name === "Player") {
-            setColour("blue");
+            setColour("#D4AC2B");
           }
         }}
       />
@@ -60,7 +60,7 @@ const SampleLevel = () => {
         position={[20, 0.5, 20]}
         onCollide={(e) => {
           if (e.body.name === "Player") {
-            setColour("orange");
+            setColour("#FFCE45");
           }
         }}
       />
