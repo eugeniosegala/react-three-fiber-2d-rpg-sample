@@ -13,6 +13,7 @@ import playerDown from "../images/playerDown.gif";
 import playerRight from "../images/playerRight.gif";
 import playerLeft from "../images/playerLeft.gif";
 import playerIdle from "../images/playerIdle.gif";
+import coinImg from "../images/coin.gif";
 
 // instantiate GifLoader
 const gifLoader = new GifLoader();
@@ -42,5 +43,6 @@ const playerDownMovement = imgLoader(playerDown, "gif");
 const playerRightMovement = imgLoader(playerRight, "gif");
 const playerLeftMovement = imgLoader(playerLeft, "gif");
 const playerIdleMovement = imgLoader(playerIdle, "gif");
+const coin = imgLoader(coinImg, "gif");
 
-export { playerUpMovement, playerDownMovement, playerRightMovement, playerLeftMovement, playerIdleMovement, wood };
+export { playerUpMovement, playerDownMovement, playerRightMovement, playerLeftMovement, playerIdleMovement, wood, coin };

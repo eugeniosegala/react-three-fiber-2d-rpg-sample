@@ -1,6 +1,8 @@
 import { useBox } from "@react-three/cannon";
 import { useFrame } from "@react-three/fiber";
 
+import { wood } from "../utils/textures";
+
 const Object = (props) => {
   const [ref, api] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }));
 
@@ -10,8 +12,11 @@ const Object = (props) => {
 
   return (
     <mesh ref={ref}>
-      <boxBufferGeometry />
-      <meshStandardMaterial color="red" />
+      <boxGeometry />
+      <meshStandardMaterial
+        transparent={true}
+        map={wood}
+      />
     </mesh>
   );
 };

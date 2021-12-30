@@ -43,13 +43,9 @@ const SampleLevel = () => {
       <Object position={[5, 1, 2]} type="Static" />
       <Object position={[5, 1, 3]} type="Static" />
       <Object mass={1} position={[3, 0.5, 0]} />
-      <Trigger
-        args={[1, 1, 1]}
-        onCollide={(e) => {
-          console.log("Collision event on BoxTrigger", e);
-        }}
-        position={[0, 0.5, 7]}
-      />
+      <Trigger args={[1, 1, 1]} position={[0, 0.5, 7]} />
+      <Trigger args={[1, 1, 1]} position={[2, 0.5, 7]} />
+      <Trigger args={[1, 1, 1]} position={[4, 0.5, 7]} />
       <Object
         mass={1}
         position={[10, 0.5, 20]}

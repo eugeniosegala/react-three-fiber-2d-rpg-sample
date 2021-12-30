@@ -8,7 +8,6 @@ import {
   playerRightMovement,
   playerLeftMovement,
   playerIdleMovement,
-  wood
 } from "../utils/textures";
 
 const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
@@ -67,7 +66,6 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
     <mesh ref={ref} name="Player">
       <boxGeometry />
       <meshStandardMaterial
-        attachArray="material"
         transparent={true}
         map={calculateImage()}
       />
