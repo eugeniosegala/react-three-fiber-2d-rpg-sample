@@ -1,7 +1,7 @@
 import useLongPress from "../hooks/useLongPress";
 
-const MobileMovements = () => {
-  const onKeyLongPress = (type = "keydown") => {
+const PhysicalMovements = () => {
+  const onKeyLongPress = (type) => {
     document.dispatchEvent(
       new KeyboardEvent(type, {
         key: "W",
@@ -15,17 +15,11 @@ const MobileMovements = () => {
     );
   };
 
-  const defaultOptions = {
+  const longWPressEvent = useLongPress(() => onKeyLongPress("keydown"), null, {
     shouldPreventDefault: true,
     delay: 0,
     onClear: () => onKeyLongPress("keyup"),
-  };
-
-  const longWPressEvent = useLongPress(
-    () => onKeyLongPress(),
-    null,
-    defaultOptions
-  );
+  });
 
   return (
     <>
@@ -35,4 +29,4 @@ const MobileMovements = () => {
   );
 };
 
-export default MobileMovements;
+export default PhysicalMovements;
