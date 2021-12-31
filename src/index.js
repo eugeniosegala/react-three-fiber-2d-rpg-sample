@@ -4,12 +4,14 @@ import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
 
 import SampleLevel from "./levels/SampleLevel";
+import MobileMovements from "./components/MobileMovements";
 
 import "./index.css";
 
 const Game = () => {
   return (
     <>
+      <MobileMovements />
       <Canvas
         antialias={false}
         orthographic
