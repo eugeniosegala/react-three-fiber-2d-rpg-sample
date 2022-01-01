@@ -12,11 +12,7 @@ const Game = () => {
   return (
     <>
       <PhysicalMovements />
-      <Canvas
-        antialias={false}
-        orthographic
-        camera={{ zoom: 50, position: [0, 5, 0] }}
-      >
+      <Canvas orthographic camera={{ zoom: 50, position: [0, 5, 0] }}>
         <Physics
           broadphase="SAP"
           defaultContactMaterial={{
