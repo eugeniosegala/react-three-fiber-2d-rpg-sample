@@ -96,7 +96,7 @@ const SampleLevel = () => {
         position={[20, 0.5, 20]}
         onCollide={(e) => {
           if (e.body.name === "Player") {
-            setColour("#FFCE45");
+            setColour("#ff45ab");
           }
         }}
         texture={orb}

@@ -35,16 +35,6 @@ const PhysicalMovements = () => {
     }
   );
 
-  const longAPressEvent = useLongPress(
-    () => onKeyLongPress("keydown", "A", 65, "KeyA"),
-    null,
-    {
-      shouldPreventDefault: true,
-      delay: 0,
-      onClear: () => onKeyLongPress("keyup", "A", 65, "KeyA"),
-    }
-  );
-
   const longDPressEvent = useLongPress(
     () => onKeyLongPress("keydown", "D", 68, "KeyD"),
     null,
@@ -55,12 +45,22 @@ const PhysicalMovements = () => {
     }
   );
 
+  const longAPressEvent = useLongPress(
+    () => onKeyLongPress("keydown", "A", 65, "KeyA"),
+    null,
+    {
+      shouldPreventDefault: true,
+      delay: 0,
+      onClear: () => onKeyLongPress("keyup", "A", 65, "KeyA"),
+    }
+  );
+
   return (
     <div className="controls">
       <button {...longWPressEvent}>UP</button>
       <button {...longSPressEvent}>DOWN</button>
-      <button {...longDPressEvent}>RIGHT</button>
       <button {...longAPressEvent}>LEFT</button>
+      <button {...longDPressEvent}>RIGHT</button>
     </div>
   );
 };
