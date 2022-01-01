@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function actionByValue(key) {
-  const value = 8;
+  const value = 10;
   const keys = {
     moveForward: -value,
     moveBackward: value,

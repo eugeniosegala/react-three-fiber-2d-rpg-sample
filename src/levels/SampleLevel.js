@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Stats } from "@react-three/drei";
+import { Stats, OrbitControls } from "@react-three/drei";
 
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
 
@@ -7,6 +7,61 @@ import Plane from "../components/Plane";
 import Player from "../components/Player";
 import Object from "../components/Object";
 import Trigger from "../components/Trigger";
+
+const mapDataString = (str) => {
+  const lineBreak = "\n";
+  const data = [];
+  let line = -1;
+  let string = str;
+  // strip any break at the end
+  if (string[string.length - 1] === lineBreak) {
+    string = string.slice(0, -1);
+  }
+  for (const char of string) {
+    if (char === " ") continue;
+    if (char === lineBreak) {
+      data[++line] = [];
+    } else {
+      data[line].push(char);
+    }
+  }
+  return data;
+};
+
+const resolveMapTile = (type, x, y) => {
+  const key = `${x}-${y}`;
+
+  switch (type) {
+    case "·":
+      return null;
+    case "#":
+      return <Object key={key} position={[x, 0.5, y]} type="Static" />;
+    case "C":
+      return <Trigger key={key} position={[x, 0.5, y]} />;
+    default:
+      return null;
+  }
+};
+
+const mapData = mapDataString(`
+# # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · C · · · C · · · C · · · #
+# · · · · · C · · · C · · · · · #
+# · · · C · · · C · · · C · · · # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # 
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # # # # # # # # #
+# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
+# # # # # # # · · · # # # # # # # · · · · · · · · · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · # # # # # # # # #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # # # # # # # # # # # # # # # #
+`);
 
 const SampleLevel = () => {
   const {
@@ -39,19 +94,10 @@ const SampleLevel = () => {
         moveRight={moveRight}
         tileMovement={tileMovement}
       />
-      <Object position={[5, 1, 1]} type="Static" />
-      <Object position={[5, 1, 2]} type="Static" />
-      <Object position={[5, 1, 3]} type="Static" />
-      <Object mass={1} position={[3, 0.5, 0]} />
-      <Trigger position={[0, 0.5, 7]} />
-      <Trigger position={[1, 0.5, 7]} />
-      <Trigger position={[2, 0.5, 7]} />
-      <Trigger position={[0, 0.5, 8]} />
-      <Trigger position={[1, 0.5, 8]} />
-      <Trigger position={[2, 0.5, 8]} />
-      <Trigger position={[0, 0.5, 9]} />
-      <Trigger position={[1, 0.5, 9]} />
-      <Trigger position={[2, 0.5, 9]} />
+      {mapData.map((row, y) =>
+        row.map((type, x) => resolveMapTile(type, x, y))
+      )}
+      <Object mass={1} position={[4, 0.5, 2]} />
       <Object
         mass={1}
         position={[10, 0.5, 20]}

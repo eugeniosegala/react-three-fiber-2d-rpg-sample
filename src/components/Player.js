@@ -14,7 +14,7 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
   const [ref, api] = useBox(() => ({
     fixedRotation: true,
     mass: 1,
-    position: [0, 0.5, 0],
+    position: [2, 0.5, 2],
   }));
 
   const { camera } = useThree();
