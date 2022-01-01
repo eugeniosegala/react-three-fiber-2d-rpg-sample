@@ -66,8 +66,6 @@ const SampleLevel = () => {
   //   tileMovement
   // );
 
-  console.log(1);
-
   return (
     <>
       <ambientLight intensity={0.1} />
