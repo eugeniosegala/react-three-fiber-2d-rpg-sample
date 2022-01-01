@@ -4,7 +4,7 @@ import { useBox } from "@react-three/cannon";
 import { coin } from "../utils/textures";
 import coinSound from "../sounds/coin.wav";
 
-const TriggerInternal = ({ position, setCollisions }) => {
+const CoinInternal = ({ position, setCollisions }) => {
   const sound = new Audio(coinSound);
 
   const [ref] = useBox(() => ({
@@ -28,7 +28,7 @@ const TriggerInternal = ({ position, setCollisions }) => {
   );
 };
 
-const Trigger = ({ position }) => {
+const Coin = ({ position }) => {
   const [collisions, setCollisions] = useState(0);
 
   if (collisions > 0) {
@@ -36,7 +36,7 @@ const Trigger = ({ position }) => {
   }
 
   return (
-    <TriggerInternal
+    <CoinInternal
       position={position}
       collisions={collisions}
       setCollisions={setCollisions}
@@ -44,4 +44,4 @@ const Trigger = ({ position }) => {
   );
 };
 
-export default Trigger;
+export default Coin;

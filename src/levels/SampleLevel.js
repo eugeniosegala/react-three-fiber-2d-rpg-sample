@@ -6,22 +6,23 @@ import { useKeyboardControls } from "../hooks/useKeyboardControls";
 import Plane from "../components/Plane";
 import Player from "../components/Player";
 import Object from "../components/Object";
-import Trigger from "../components/Trigger";
+import Coin from "../components/Coin";
 import { mapDataString } from "../utils/mapDataString";
+import { chest, orb } from "../utils/textures";
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
 # · · · · · · · · · · · · · · · #
+# · · · T · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · #
 # · · · C · · · C · · · C · · · #
 # · · · · · C · · · C · · · · · #
 # · · · C · · · C · · · C · · · # # # # # # # # # # # # # # # #
-# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · #
 # · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # 
-# · · · · · · · · · · · · · · · · · · · · · · · · · · C · · · # # # # # # # # #
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # # # # # # # # #
 # · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · # · · · · · · · C · · · · · · · · · · · · C · #
+# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · C C C · #
 # # # # # # # · · · # # # # # # # · · · · · · · · · · · · · · · · · · · · · · #
 · · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · # # # # # # # # #
 · · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
@@ -33,12 +34,12 @@ const resolveMapTile = (type, x, y) => {
   const key = `${x}-${y}`;
 
   switch (type) {
-    case "·":
-      return null;
     case "#":
       return <Object key={key} position={[x, 0.5, y]} type="Static" />;
+    case "T":
+      return <Object key={key} position={[x, 0.5, y]} texture={chest} />;
     case "C":
-      return <Trigger key={key} position={[x, 0.5, y]} />;
+      return <Coin key={key} position={[x, 0.5, y]} />;
     default:
       return null;
   }
@@ -65,8 +66,11 @@ const SampleLevel = () => {
   //   tileMovement
   // );
 
+  console.log(1);
+
   return (
     <>
+      <ambientLight intensity={0.1} />
       <Plane position={[0, 0, 0]} colour={colour} />
       <Player
         moveForward={moveForward}
@@ -78,7 +82,6 @@ const SampleLevel = () => {
       {mapData.map((row, y) =>
         row.map((type, x) => resolveMapTile(type, x, y))
       )}
-      <Object mass={1} position={[4, 0.5, 2]} />
       <Object
         mass={1}
         position={[10, 0.5, 20]}
@@ -87,6 +90,7 @@ const SampleLevel = () => {
             setColour("#D4AC2B");
           }
         }}
+        texture={orb}
       />
       <Object
         mass={1}
@@ -96,8 +100,8 @@ const SampleLevel = () => {
             setColour("#FFCE45");
           }
         }}
+        texture={orb}
       />
-      <ambientLight intensity={0.1} />
       <spotLight
         position={[10, 10, 10]}
         angle={0.5}

@@ -2,18 +2,19 @@ import { useBox } from "@react-three/cannon";
 
 import { wood } from "../utils/textures";
 
-const Object = (props) => {
+const Object = ({ position, type, texture, onCollide }) => {
   const [ref] = useBox(() => ({
     fixedRotation: true,
     mass: 1,
-    position: [0, 5, 0],
-    ...props,
+    position,
+    type: type || "Dynamic",
+    onCollide,
   }));
 
   return (
     <mesh ref={ref}>
       <boxGeometry />
-      <meshStandardMaterial transparent={true} map={wood} />
+      <meshStandardMaterial transparent={true} map={texture || wood} />
     </mesh>
   );
 };
