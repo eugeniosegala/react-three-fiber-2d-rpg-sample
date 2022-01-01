@@ -8,7 +8,7 @@ import {
   playerRightMovement,
   playerLeftMovement,
   playerIdleMovement,
-} from "../utils/textures";
+} from "../utils/textureManager";
 
 const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
   const [ref, api] = useBox(() => ({

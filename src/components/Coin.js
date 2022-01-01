@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useBox } from "@react-three/cannon";
 
-import { coin } from "../utils/textures";
+import { coin } from "../utils/textureManager";
 import coinSound from "../sounds/coin.wav";
 
 const CoinInternal = ({ position, setCollisions }) => {

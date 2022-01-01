@@ -8,7 +8,7 @@ import Player from "../components/Player";
 import Object from "../components/Object";
 import Coin from "../components/Coin";
 import { mapDataString } from "../utils/mapDataString";
-import { chest, orb } from "../utils/textures";
+import { chest, orb } from "../utils/textureManager";
 
 const mapData = mapDataString(`
 # # # # # # # # # # # # # # # # #
@@ -80,6 +80,7 @@ const SampleLevel = () => {
       {mapData.map((row, y) =>
         row.map((type, x) => resolveMapTile(type, x, y))
       )}
+      {/*Elements outside mapData*/}
       <Object
         mass={1}
         position={[10, 0.5, 20]}

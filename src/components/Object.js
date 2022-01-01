@@ -1,6 +1,6 @@
 import { useBox } from "@react-three/cannon";
 
-import { wood } from "../utils/textures";
+import { wood } from "../utils/textureManager";
 
 const Object = ({ position, type, texture, onCollide }) => {
   const [ref] = useBox(() => ({
