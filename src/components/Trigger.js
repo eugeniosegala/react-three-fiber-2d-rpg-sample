@@ -5,7 +5,7 @@ import { coin } from "../utils/textures";
 import coinSound from "../sounds/coin.wav";
 
 const TriggerInternal = ({ position, setCollisions }) => {
-  const ping = new Audio(coinSound);
+  const sound = new Audio(coinSound);
 
   const [ref] = useBox(() => ({
     isTrigger: true,
@@ -16,7 +16,7 @@ const TriggerInternal = ({ position, setCollisions }) => {
   }));
 
   const handleOnCollide = async () => {
-    await ping.play();
+    await sound.play();
     setCollisions(1);
   };
 

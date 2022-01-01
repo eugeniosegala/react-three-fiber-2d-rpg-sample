@@ -7,26 +7,27 @@ import Plane from "../components/Plane";
 import Player from "../components/Player";
 import Object from "../components/Object";
 import Trigger from "../components/Trigger";
+import { mapDataString } from "../utils/mapDataString";
 
-const mapDataString = (str) => {
-  const lineBreak = "\n";
-  const data = [];
-  let line = -1;
-  let string = str;
-  // strip any break at the end
-  if (string[string.length - 1] === lineBreak) {
-    string = string.slice(0, -1);
-  }
-  for (const char of string) {
-    if (char === " ") continue;
-    if (char === lineBreak) {
-      data[++line] = [];
-    } else {
-      data[line].push(char);
-    }
-  }
-  return data;
-};
+const mapData = mapDataString(`
+# # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · #
+# · · · C · · · C · · · C · · · #
+# · · · · · C · · · C · · · · · #
+# · · · C · · · C · · · C · · · # # # # # # # # # # # # # # # #
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # 
+# · · · · · · · · · · · · · · · · · · · · · · · · · · C · · · # # # # # # # # #
+# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
+# · · · · · · · · · · · · · · · # · · · · · · · C · · · · · · · · · · · · C · #
+# # # # # # # · · · # # # # # # # · · · · · · · · · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · # # # # # # # # #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
+· · · · · · · · · · · · · · · · # # # # # # # # # # # # # # # #
+`);
 
 const resolveMapTile = (type, x, y) => {
   const key = `${x}-${y}`;
@@ -42,26 +43,6 @@ const resolveMapTile = (type, x, y) => {
       return null;
   }
 };
-
-const mapData = mapDataString(`
-# # # # # # # # # # # # # # # # #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · #
-# · · · C · · · C · · · C · · · #
-# · · · · · C · · · C · · · · · #
-# · · · C · · · C · · · C · · · # # # # # # # # # # # # # # # #
-# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # 
-# · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · # # # # # # # # #
-# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
-# · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · · · · · · · · · #
-# # # # # # # · · · # # # # # # # · · · · · · · · · · · · · · · · · · · · · · #
-· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · # # # # # # # # #
-· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
-· · · · · · · · · · · · · · · · # · · · · · · · · · · · · · · #
-· · · · · · · · · · · · · · · · # # # # # # # # # # # # # # # #
-`);
 
 const SampleLevel = () => {
   const {
