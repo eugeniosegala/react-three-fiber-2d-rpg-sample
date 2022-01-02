@@ -56,6 +56,8 @@ const SampleLevel = () => {
     []
   );
 
+  console.log("World rendering...");
+
   return (
     <>
       <ambientLight intensity={0.1} />
