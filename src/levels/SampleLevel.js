@@ -64,7 +64,7 @@ const SampleLevel = () => {
       <Plane position={[0, 0, 0]} colour={colour} />
       <Player />
       {memoizedMapData}
-      {/*Elements outside mapData*/}
+      {/* Elements outside mapData */}
       <Object
         position={[10, 0.5, 20]}
         onCollide={(e) => {

@@ -56,11 +56,20 @@ const PhysicalMovements = () => {
   );
 
   return (
-    <div className="controls">
-      <button {...longWPressEvent}>UP</button>
-      <button {...longSPressEvent}>DOWN</button>
-      <button {...longAPressEvent}>LEFT</button>
-      <button {...longDPressEvent}>RIGHT</button>
+    <div className="d-pad">
+      <button {...longWPressEvent} id="up">
+        &#9650;
+      </button>
+      <button {...longDPressEvent} id="right">
+        &#9658;
+      </button>
+      <button id="center" />
+      <button {...longSPressEvent} id="down">
+        &#9660;
+      </button>
+      <button {...longAPressEvent} id="left">
+        &#9668;
+      </button>
     </div>
   );
 };
