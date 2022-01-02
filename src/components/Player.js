@@ -9,8 +9,12 @@ import {
   playerLeftMovement,
   playerIdleMovement,
 } from "../utils/textureManager";
+import { useKeyboardControls } from "../hooks/useKeyboardControls";
 
-const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
+const Player = () => {
+  const { moveForward, moveBackward, moveLeft, moveRight } =
+    useKeyboardControls();
+
   const [ref, api] = useBox(() => ({
     fixedRotation: true,
     mass: 1,

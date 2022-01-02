@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Stats, OrbitControls } from "@react-three/drei";
-
-import { useKeyboardControls } from "../hooks/useKeyboardControls";
+import {
+  Stats,
+  // OrbitControls
+} from "@react-three/drei";
 
 import Plane from "../components/Plane";
 import Player from "../components/Player";
@@ -46,37 +47,13 @@ const resolveMapTile = (type, x, y) => {
 };
 
 const SampleLevel = () => {
-  const {
-    moveForward,
-    moveBackward,
-    moveLeft,
-    moveRight,
-    // lastMovement,
-    tileMovement,
-  } = useKeyboardControls();
-
   const [colour, setColour] = useState("#7E370C");
-
-  // console.log(
-  //   moveForward,
-  //   moveBackward,
-  //   moveLeft,
-  //   moveRight,
-  //   lastMovement,
-  //   tileMovement
-  // );
 
   return (
     <>
       <ambientLight intensity={0.1} />
       <Plane position={[0, 0, 0]} colour={colour} />
-      <Player
-        moveForward={moveForward}
-        moveBackward={moveBackward}
-        moveLeft={moveLeft}
-        moveRight={moveRight}
-        tileMovement={tileMovement}
-      />
+      <Player />
       {mapData.map((row, y) =>
         row.map((type, x) => resolveMapTile(type, x, y))
       )}
@@ -108,7 +85,7 @@ const SampleLevel = () => {
         castShadow={true}
         penumbra={1}
       />
-      {/*<OrbitControls makeDefault />*/}
+      {/* <OrbitControls makeDefault /> */}
       <Stats className="stats" />
     </>
   );

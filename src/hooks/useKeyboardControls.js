@@ -28,7 +28,6 @@ export const useKeyboardControls = () => {
     moveLeft: 0,
     moveRight: 0,
     lastMovement: null,
-    tileMovement: 0,
   });
 
   useEffect(() => {
@@ -39,7 +38,6 @@ export const useKeyboardControls = () => {
           ...state,
           [actionByKey(e.code)]: actionByValue(actionByKey(e.code)),
           lastMovement: actionByKey(e.code),
-          tileMovement: state.tileMovement === 3 ? 1 : state.tileMovement + 1,
         }));
       }
     };
@@ -49,7 +47,6 @@ export const useKeyboardControls = () => {
         setMovement((state) => ({
           ...state,
           [actionByKey(e.code)]: 0,
-          tileMovement: 0,
         }));
       }
     };
