@@ -22,19 +22,21 @@ const Player = () => {
   }));
 
   const { camera } = useThree();
-  const vector = new Vector3();
 
   // api.position.subscribe((e) => {
   //   camera?.position.set(e[0], 5, e[2]);
   // });
 
   useFrame(() => {
+    const vector = new Vector3();
     const obj = ref.current.getWorldPosition(vector);
+
     if (moveForward || moveBackward || moveRight || moveLeft) {
       api.velocity.set(moveRight || moveLeft, 0, moveForward || moveBackward);
     } else {
       api.velocity.set(0, 0, 0);
     }
+
     camera?.position.set(obj.x, 5, obj.z);
     // api.rotation.set(0, 0, 0);
   });

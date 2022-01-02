@@ -1,8 +1,5 @@
 import { useState, useMemo } from "react";
-import {
-  Stats,
-  // OrbitControls
-} from "@react-three/drei";
+import { Stats, OrbitControls } from "@react-three/drei";
 
 import Plane from "../components/Plane";
 import Player from "../components/Player";
@@ -90,7 +87,7 @@ const SampleLevel = () => {
         castShadow={true}
         penumbra={1}
       />
-      {/* <OrbitControls makeDefault /> */}
+      {/*<OrbitControls makeDefault />*/}
       <Stats className="stats" />
     </>
   );
