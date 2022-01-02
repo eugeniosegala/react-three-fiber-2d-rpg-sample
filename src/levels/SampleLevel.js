@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Stats,
   // OrbitControls
@@ -49,17 +49,21 @@ const resolveMapTile = (type, x, y) => {
 const SampleLevel = () => {
   const [colour, setColour] = useState("#7E370C");
 
+  // Remove this to see performance degradation
+  const memoizedMapData = useMemo(
+    () =>
+      mapData.map((row, y) => row.map((type, x) => resolveMapTile(type, x, y))),
+    []
+  );
+
   return (
     <>
       <ambientLight intensity={0.1} />
       <Plane position={[0, 0, 0]} colour={colour} />
       <Player />
-      {mapData.map((row, y) =>
-        row.map((type, x) => resolveMapTile(type, x, y))
-      )}
+      {memoizedMapData}
       {/*Elements outside mapData*/}
       <Object
-        mass={1}
         position={[10, 0.5, 20]}
         onCollide={(e) => {
           if (e.body.name === "Player") {
@@ -69,7 +73,6 @@ const SampleLevel = () => {
         texture={orb}
       />
       <Object
-        mass={1}
         position={[20, 0.5, 20]}
         onCollide={(e) => {
           if (e.body.name === "Player") {

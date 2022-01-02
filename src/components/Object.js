@@ -1,3 +1,4 @@
+import React from "react";
 import { useBox } from "@react-three/cannon";
 
 import { wood } from "../utils/textureManager";
@@ -23,4 +24,4 @@ const Object = ({ position, type, texture, onCollide }) => {
   );
 };
 
-export default Object;
+export default React.memo(Object);
