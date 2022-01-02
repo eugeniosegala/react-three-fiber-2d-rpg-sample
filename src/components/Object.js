@@ -13,8 +13,12 @@ const Object = ({ position, type, texture, onCollide }) => {
 
   return (
     <mesh ref={ref}>
-      <boxGeometry />
-      <meshStandardMaterial transparent={true} map={texture || wood} />
+      <boxBufferGeometry attach="geometry" />
+      <meshStandardMaterial
+        attach="material"
+        transparent={true}
+        map={texture || wood}
+      />
     </mesh>
   );
 };

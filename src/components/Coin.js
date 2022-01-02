@@ -22,8 +22,8 @@ const CoinInternal = ({ position, setCollisions }) => {
 
   return (
     <mesh {...{ position, ref }}>
-      <boxGeometry />
-      <meshStandardMaterial transparent={true} map={coin} />
+      <boxBufferGeometry attach="geometry" />
+      <meshStandardMaterial attach="material" transparent={true} map={coin} />
     </mesh>
   );
 };

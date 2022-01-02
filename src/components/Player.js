@@ -63,8 +63,12 @@ const Player = ({ moveForward, moveBackward, moveLeft, moveRight }) => {
 
   return (
     <mesh ref={ref} name="Player">
-      <boxGeometry />
-      <meshStandardMaterial transparent={true} map={calculateImage()} />
+      <boxBufferGeometry attach="geometry" />
+      <meshStandardMaterial
+        attach="material"
+        transparent={true}
+        map={calculateImage()}
+      />
     </mesh>
   );
 };
