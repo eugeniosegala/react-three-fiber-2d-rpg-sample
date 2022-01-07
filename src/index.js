@@ -2,15 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
+import { useProgress } from "@react-three/drei";
 
 import SampleLevel from "./levels/SampleLevel";
 import PhysicalMovements from "./components/PhysicalMovements";
 
 import "./index.css";
 
+function Loader() {
+  const { progress } = useProgress();
+  return <div>loading {progress.toFixed()} %</div>;
+}
+
 const Game = () => {
   return (
     <>
+      <Loader />
       <PhysicalMovements />
       <Canvas orthographic camera={{ zoom: 50, position: [0, 5, 0] }}>
         <Physics
