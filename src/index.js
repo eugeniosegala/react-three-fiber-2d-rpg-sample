@@ -17,7 +17,7 @@ function Loader() {
 const Game = () => {
   return (
     <>
-      <Loader />
+      {/* <Loader /> */}
       <PhysicalMovements />
       <Canvas orthographic camera={{ zoom: 50, position: [0, 5, 0] }}>
         <Physics
