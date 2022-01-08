@@ -18,6 +18,8 @@ const Coin = ({ position }) => {
     api.position.set(position[0], -5, position[2]);
   };
 
+  // const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
+
   return (
     <mesh {...{ position, ref }}>
       <boxBufferGeometry attach="geometry" />
