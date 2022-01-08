@@ -1,11 +1,12 @@
+import React from "react";
 import { useBox } from "@react-three/cannon";
 
 import { coin } from "../utils/textureManager";
 import coinSound from "../sounds/coin.wav";
 
-const Coin = ({ position }) => {
+const Coin = ({ position, mapData, setCurrentMap }) => {
   const sound = new Audio(coinSound);
-  const [ref, api] = useBox(() => ({
+  const [ref] = useBox(() => ({
     isTrigger: true,
     fixedRotation: true,
     args: [0.5, 0.5, 0.5],
@@ -15,7 +16,9 @@ const Coin = ({ position }) => {
 
   const handleOnCollide = async () => {
     await sound.play();
-    api.position.set(position[0], -5, position[2]);
+    let newMapData = [...mapData];
+    newMapData[position[2]][position[0]] = "·";
+    setCurrentMap(newMapData);
   };
 
   // const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
@@ -28,4 +31,8 @@ const Coin = ({ position }) => {
   );
 };
 
-export default Coin;
+const isSameType = (prevProps, nextProps) => {
+  return prevProps.type === nextProps.type;
+};
+
+export default React.memo(Coin, isSameType);

@@ -28,7 +28,7 @@ const mapData = mapDataString(`
 · · · · · · · · · · · · · · · · # # # # # # # # # # # # # # # #
 `);
 
-const resolveMapTile = (type, x, y) => {
+const resolveMapTile = (type, x, y, mapData, setCurrentMap) => {
   const key = `${x}-${y}`;
 
   switch (type) {
@@ -37,7 +37,15 @@ const resolveMapTile = (type, x, y) => {
     case "T":
       return <Object key={key} position={[x, 0.5, y]} texture={chest} />;
     case "C":
-      return <Coin key={key} position={[x, 0.5, y]} />;
+      return (
+        <Coin
+          key={key}
+          position={[x, 0.5, y]}
+          mapData={mapData}
+          setCurrentMap={setCurrentMap}
+          type={type}
+        />
+      );
     default:
       return null;
   }
@@ -46,12 +54,14 @@ const resolveMapTile = (type, x, y) => {
 const SampleLevel = () => {
   const [colour, setColour] = useState("#7E370C");
 
+  const [currentMap, setCurrentMap] = useState(mapData);
+
   // Remove this to see performance degradation
-  const memoizedMapData = useMemo(
-    () =>
-      mapData.map((row, y) => row.map((type, x) => resolveMapTile(type, x, y))),
-    []
-  );
+  const memoizedMapData = useMemo(() => {
+    return currentMap.map((row, y) =>
+      row.map((type, x) => resolveMapTile(type, x, y, mapData, setCurrentMap))
+    );
+  }, [currentMap]);
 
   console.log("World rendering...");
 

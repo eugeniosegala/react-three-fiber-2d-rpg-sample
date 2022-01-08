@@ -24,4 +24,8 @@ const Object = ({ position, type, texture, onCollide }) => {
   );
 };
 
-export default React.memo(Object);
+const isSameType = (prevProps, nextProps) => {
+  return prevProps.type === nextProps.type;
+};
+
+export default React.memo(Object, isSameType);
