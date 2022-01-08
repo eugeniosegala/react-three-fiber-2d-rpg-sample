@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { useBox } from "@react-three/cannon";
 
 import { coin } from "../utils/textureManager";
 import coinSound from "../sounds/coin.wav";
 
-const CoinInternal = ({ position, setCollisions }) => {
+const Coin = ({ position }) => {
   const sound = new Audio(coinSound);
-
-  const [ref] = useBox(() => ({
+  const [ref, api] = useBox(() => ({
     isTrigger: true,
     fixedRotation: true,
     args: [0.5, 0.5, 0.5],
@@ -17,7 +15,7 @@ const CoinInternal = ({ position, setCollisions }) => {
 
   const handleOnCollide = async () => {
     await sound.play();
-    setCollisions(1);
+    api.position.set(position[0], -5, position[2]);
   };
 
   return (
@@ -25,22 +23,6 @@ const CoinInternal = ({ position, setCollisions }) => {
       <boxBufferGeometry attach="geometry" />
       <meshStandardMaterial attach="material" transparent={true} map={coin} />
     </mesh>
-  );
-};
-
-const Coin = ({ position }) => {
-  const [collisions, setCollisions] = useState(0);
-
-  if (collisions > 0) {
-    return null;
-  }
-
-  return (
-    <CoinInternal
-      position={position}
-      collisions={collisions}
-      setCollisions={setCollisions}
-    />
   );
 };
 

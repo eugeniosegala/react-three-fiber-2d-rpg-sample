@@ -31,6 +31,15 @@ const Player = () => {
     const vector = new Vector3();
     const obj = ref.current.getWorldPosition(vector);
 
+    // check is player is ready
+    /*
+    console.log(
+      JSON.parse(JSON.stringify(ref)).current.object.hasOwnProperty(
+        "matrixAutoUpdate"
+      )
+    );
+     */
+
     if (moveForward || moveBackward || moveRight || moveLeft) {
       api.velocity.set(moveRight || moveLeft, 0, moveForward || moveBackward);
     } else {
