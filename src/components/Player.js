@@ -11,6 +11,8 @@ import {
 } from "../utils/textureManager";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
 
+const vector = new Vector3();
+
 const Player = () => {
   const { moveForward, moveBackward, moveLeft, moveRight } =
     useKeyboardControls();
@@ -28,7 +30,6 @@ const Player = () => {
   // });
 
   useFrame(() => {
-    const vector = new Vector3();
     const obj = ref.current.getWorldPosition(vector);
 
     // check is player is ready

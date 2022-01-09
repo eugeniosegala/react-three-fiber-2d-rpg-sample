@@ -6,7 +6,7 @@ import coinSound from "../sounds/coin.wav";
 
 const Coin = ({ position, mapData, setCurrentMap }) => {
   const sound = new Audio(coinSound);
-  const [ref] = useBox(() => ({
+  const [ref, api] = useBox(() => ({
     isTrigger: true,
     fixedRotation: true,
     args: [0.5, 0.5, 0.5],
@@ -16,9 +16,11 @@ const Coin = ({ position, mapData, setCurrentMap }) => {
 
   const handleOnCollide = async () => {
     await sound.play();
-    let newMapData = [...mapData];
-    newMapData[position[2]][position[0]] = "·";
-    setCurrentMap(newMapData);
+    // let newMapData = [...mapData];
+    // newMapData[position[2]][position[0]] = "·";
+    // setCurrentMap(newMapData);
+    api.position.set(position[0], -5, position[2]);
+    api.sleep();
   };
 
   // const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
