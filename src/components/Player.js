@@ -10,11 +10,12 @@ import {
   playerIdleMovement,
 } from "../utils/textureManager";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
+import Attack from "./Attack";
 
 const vector = new Vector3();
 
 const Player = () => {
-  const { moveForward, moveBackward, moveLeft, moveRight } =
+  const { moveForward, moveBackward, moveLeft, moveRight, action } =
     useKeyboardControls();
 
   const [ref, api] = useBox(() => ({
@@ -39,7 +40,8 @@ const Player = () => {
         "matrixAutoUpdate"
       )
     );
-     */
+    console.log(ref.current.matrixAutoUpdate);
+    */
 
     if (moveForward || moveBackward || moveRight || moveLeft) {
       api.velocity.set(moveRight || moveLeft, 0, moveForward || moveBackward);
@@ -78,14 +80,17 @@ const Player = () => {
   };
 
   return (
-    <mesh ref={ref} name="Player">
-      <boxBufferGeometry attach="geometry" />
-      <meshStandardMaterial
-        attach="material"
-        transparent={true}
-        map={calculateImage()}
-      />
-    </mesh>
+    <>
+      <mesh ref={ref} name="Player">
+        <boxBufferGeometry attach="geometry" />
+        <meshStandardMaterial
+          attach="material"
+          transparent={true}
+          map={calculateImage()}
+        />
+      </mesh>
+      <Attack action={action} camera={camera} />
+    </>
   );
 };
 

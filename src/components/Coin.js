@@ -19,6 +19,7 @@ const Coin = ({ position, mapData, setCurrentMap }) => {
     // let newMapData = [...mapData];
     // newMapData[position[2]][position[0]] = "·";
     // setCurrentMap(newMapData);
+    // moving the element is way more performant than deleting it (using cannon)
     api.position.set(position[0], -5, position[2]);
     api.sleep();
   };

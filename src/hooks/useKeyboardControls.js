@@ -7,6 +7,7 @@ function actionByValue(key) {
     moveBackward: value,
     moveLeft: -value,
     moveRight: value,
+    action: value,
   };
   return keys[key];
 }
@@ -17,6 +18,7 @@ function actionByKey(key) {
     KeyS: "moveBackward",
     KeyA: "moveLeft",
     KeyD: "moveRight",
+    Space: "action",
   };
   return keys[key];
 }
@@ -27,6 +29,7 @@ export const useKeyboardControls = () => {
     moveBackward: 0,
     moveLeft: 0,
     moveRight: 0,
+    action: 0,
     lastMovement: null,
   });
 
