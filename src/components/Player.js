@@ -45,8 +45,6 @@ const Player = () => {
 
     if (moveForward || moveBackward || moveRight || moveLeft) {
       api.velocity.set(moveRight || moveLeft, 0, moveForward || moveBackward);
-    } else {
-      api.velocity.set(0, 0, 0);
     }
 
     camera?.position.set(obj.x, 5, obj.z);
@@ -89,7 +87,14 @@ const Player = () => {
           map={calculateImage()}
         />
       </mesh>
-      <Attack action={action} camera={camera} />
+      <Attack
+        moveForward={moveForward}
+        moveBackward={moveBackward}
+        moveLeft={moveLeft}
+        moveRight={moveRight}
+        action={action}
+        camera={camera}
+      />
     </>
   );
 };
