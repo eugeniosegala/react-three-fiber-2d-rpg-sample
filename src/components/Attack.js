@@ -1,7 +1,7 @@
 import React from "react";
 import { useBox } from "@react-three/cannon";
 
-import { wood } from "../utils/textureManager";
+import { bomb } from "../utils/textureManager";
 import { useFrame } from "@react-three/fiber";
 
 const Attack = ({
@@ -38,7 +38,7 @@ const Attack = ({
   return (
     <mesh ref={ref}>
       <boxBufferGeometry attach="geometry" />
-      <meshStandardMaterial attach="material" transparent={true} map={wood} />
+      <meshStandardMaterial attach="material" transparent={true} map={bomb} />
     </mesh>
   );
 };

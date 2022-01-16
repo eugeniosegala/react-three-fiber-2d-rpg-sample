@@ -16,6 +16,7 @@ import playerIdle from "../images/playerIdle.gif";
 import coinImg from "../images/coin.gif";
 import chestImg from "../images/chest.png";
 import orbImg from "../images/orb.gif";
+import bombImg from "../images/bomb.gif";
 
 // instantiate GifLoader
 const gifLoader = new GifLoader();
@@ -48,6 +49,7 @@ const playerIdleMovement = imgLoader(playerIdle, "gif");
 const coin = imgLoader(coinImg, "gif");
 const chest = imgLoader(chestImg);
 const orb = imgLoader(orbImg, "gif");
+const bomb = imgLoader(bombImg, "gif");
 
 export {
   playerUpMovement,
@@ -59,4 +61,5 @@ export {
   coin,
   chest,
   orb,
+  bomb,
 };
