@@ -26,10 +26,6 @@ const Player = () => {
   const { camera } = useThree();
   const ref = useRef();
 
-  // api.position.subscribe((e) => {
-  //   camera?.position.set(e[0], 5, e[2]);
-  // });
-
   useFrame((world) => {
     /*
     console.log(
@@ -79,6 +75,36 @@ const Player = () => {
         9999
       ) - 1;
 
+    const rightCollisions = collisions.filter((e) => {
+      return (
+        (e.position.z === Math.ceil(position.z) ||
+          e.position.z === Math.floor(position.z)) &&
+        e.position.x >= position.x
+      );
+    });
+
+    const rightClosest =
+      closest(
+        rightCollisions.map((e) => e.position.x),
+        position.x,
+        9999
+      ) - 1;
+
+    const leftCollisions = collisions.filter((e) => {
+      return (
+        (e.position.z === Math.ceil(position.z) ||
+          e.position.z === Math.floor(position.z)) &&
+        e.position.x <= position.x
+      );
+    });
+
+    const leftClosest =
+      closest(
+        leftCollisions.map((e) => e.position.x),
+        position.x,
+        -9999
+      ) + 1;
+
     if (ref.current.position.z > topClosest) {
       if (moveForward) {
         ref.current.position.z = Number(
@@ -95,16 +121,20 @@ const Player = () => {
       }
     }
 
-    if (moveRight) {
-      ref.current.position.x = Number(
-        (ref.current.position.x + 0.1).toFixed(2)
-      );
+    if (ref.current.position.x < rightClosest) {
+      if (moveRight) {
+        ref.current.position.x = Number(
+          (ref.current.position.x + 0.1).toFixed(2)
+        );
+      }
     }
 
-    if (moveLeft) {
-      ref.current.position.x = Number(
-        (ref.current.position.x - 0.1).toFixed(2)
-      );
+    if (ref.current.position.x > leftClosest) {
+      if (moveLeft) {
+        ref.current.position.x = Number(
+          (ref.current.position.x - 0.1).toFixed(2)
+        );
+      }
     }
 
     camera?.position.set(ref.current.position.x, 5, ref.current.position.z);
