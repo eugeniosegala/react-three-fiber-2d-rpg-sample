@@ -10,13 +10,13 @@ import {
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
 import calcDistance from "../utils/calcDistance";
 
-function closest(arr, val) {
-  return Math.max.apply(
-    null,
-    arr.filter(function (v) {
-      return v <= val;
-    })
-  );
+function closest(arr, val, fallback) {
+  if (!arr.length) {
+    return fallback;
+  }
+  return arr.reduce((a, b) => {
+    return Math.abs(b - val) < Math.abs(a - val) ? b : a;
+  });
 }
 
 const Player = () => {
@@ -38,11 +38,8 @@ const Player = () => {
       )
     );
     console.log(ref.current.matrixAutoUpdate);
-
     raycaster.setFromCamera(vector, camera);
-
     const intersects = raycaster.intersectObjects(world.scene.children);
-
     console.log(intersects);
     */
 
@@ -54,17 +51,35 @@ const Player = () => {
 
     const topCollisions = collisions.filter((e) => {
       return (
-        e.position.x === Math.ceil(position.x) && e.position.z <= position.z
+        (e.position.x === Math.ceil(position.x) ||
+          e.position.x === Math.floor(position.x)) &&
+        e.position.z <= position.z
       );
     });
 
-    const close =
+    const topClosest =
       closest(
         topCollisions.map((e) => e.position.z),
-        position.z
+        position.z,
+        -9999
       ) + 1;
 
-    if (ref.current.position.z > close) {
+    const bottomCollisions = collisions.filter((e) => {
+      return (
+        (e.position.x === Math.ceil(position.x) ||
+          e.position.x === Math.floor(position.x)) &&
+        e.position.z >= position.z
+      );
+    });
+
+    const bottomClosest =
+      closest(
+        bottomCollisions.map((e) => e.position.z),
+        position.z,
+        9999
+      ) - 1;
+
+    if (ref.current.position.z > topClosest) {
       if (moveForward) {
         ref.current.position.z = Number(
           (ref.current.position.z - 0.1).toFixed(2)
@@ -72,10 +87,12 @@ const Player = () => {
       }
     }
 
-    if (moveBackward) {
-      ref.current.position.z = Number(
-        (ref.current.position.z + 0.1).toFixed(2)
-      );
+    if (ref.current.position.z < bottomClosest) {
+      if (moveBackward) {
+        ref.current.position.z = Number(
+          (ref.current.position.z + 0.1).toFixed(2)
+        );
+      }
     }
 
     if (moveRight) {
