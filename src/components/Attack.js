@@ -1,8 +1,7 @@
-import React from "react";
-import { useBox } from "@react-three/cannon";
+import React, { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 
 import { bomb } from "../utils/textureManager";
-import { useFrame } from "@react-three/fiber";
 
 const Attack = ({
   action,
@@ -12,26 +11,39 @@ const Attack = ({
   moveForward,
   moveLeft,
 }) => {
-  const [ref, api] = useBox(() => ({
-    fixedRotation: true,
-    isTrigger: true,
-  }));
+  const ref = useRef();
 
   useFrame(() => {
     if (action) {
       if (moveForward) {
-        api.position.set(camera.position.x, 0.5, camera.position.z - 1.2);
+        ref.current.position.set(
+          camera.position.x,
+          0.5,
+          camera.position.z - 1.2
+        );
       } else if (moveBackward) {
-        api.position.set(camera.position.x, 0.5, camera.position.z + 1.2);
+        ref.current.position.set(
+          camera.position.x,
+          0.5,
+          camera.position.z + 1.2
+        );
       } else if (moveRight) {
-        api.position.set(camera.position.x + 1.2, 0.5, camera.position.z);
+        ref.current.position.set(
+          camera.position.x + 1.2,
+          0.5,
+          camera.position.z
+        );
       } else if (moveLeft) {
-        api.position.set(camera.position.x - 1.2, 0.5, camera.position.z);
+        ref.current.position.set(
+          camera.position.x - 1.2,
+          0.5,
+          camera.position.z
+        );
       } else {
-        api.position.set(camera.position.x, 0.5, camera.position.z + 1);
+        ref.current.position.set(camera.position.x, 0.5, camera.position.z + 1);
       }
     } else {
-      api.position.set(3, -5, 3);
+      ref.current.position.set(3, -5, 3);
     }
   });
 

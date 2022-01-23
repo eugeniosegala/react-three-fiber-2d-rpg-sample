@@ -1,33 +1,12 @@
-import React from "react";
-import { useBox } from "@react-three/cannon";
+import React, { useRef } from "react";
 
 import { coin } from "../utils/textureManager";
-import coinSound from "../sounds/coin.wav";
 
-const Coin = ({ position, mapData, setCurrentMap }) => {
-  const sound = new Audio(coinSound);
-  const [ref, api] = useBox(() => ({
-    isTrigger: true,
-    fixedRotation: true,
-    args: [0.5, 0.5, 0.5],
-    position,
-    onCollide: handleOnCollide,
-  }));
-
-  const handleOnCollide = async () => {
-    await sound.play();
-    // let newMapData = [...mapData];
-    // newMapData[position[2]][position[0]] = "·";
-    // setCurrentMap(newMapData);
-    // moving the element is way more performant than deleting it (using cannon)
-    api.position.set(position[0], -5, position[2]);
-    api.sleep();
-  };
-
-  // const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
+const Coin = ({ position }) => {
+  const ref = useRef();
 
   return (
-    <mesh {...{ position, ref }}>
+    <mesh position={position} ref={ref}>
       <boxBufferGeometry attach="geometry" />
       <meshStandardMaterial attach="material" transparent={true} map={coin} />
     </mesh>
