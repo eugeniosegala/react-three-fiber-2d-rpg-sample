@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import React, { useCallback, useRef, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import throttle from "lodash-es/throttle";
 
 import { coin } from "../utils/textureManager";
 import coinSound from "../sounds/coin.wav";
@@ -10,21 +11,27 @@ const Coin = ({ position }) => {
 
   const ref = useRef();
   const [hide, setHide] = useState(false);
+  const { scene } = useThree();
 
-  useFrame((world) => {
-    if (!hide) {
-      const position = ref.current.position;
+  const coinControl = useCallback(
+    throttle(() => {
+      if (!hide) {
+        const position = ref?.current?.position;
 
-      // this is supposed to be the first object in the scene: tshe player
-      const collision =
-        calcDistance(world.scene.children[0].position, position) < 1;
+        // this is supposed to be the first object in the scene: tshe player
+        const collision =
+          calcDistance(scene.children[0].position, position) < 1;
 
-      if (collision) {
-        sound.play();
-        setHide(true);
+        if (collision) {
+          sound.play();
+          setHide(true);
+        }
       }
-    }
-  });
+    }, 100),
+    [hide]
+  );
+
+  useFrame(coinControl);
 
   if (hide) {
     return null;
