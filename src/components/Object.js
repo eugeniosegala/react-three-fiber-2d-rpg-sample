@@ -2,11 +2,11 @@ import React, { useRef } from "react";
 
 import { wood } from "../utils/textureManager";
 
-const Object = ({ texture, position }) => {
+const Object = ({ texture, position, name }) => {
   const ref = useRef();
 
   return (
-    <mesh ref={ref} position={position}>
+    <mesh ref={ref} position={position} name={name}>
       <boxBufferGeometry attach="geometry" />
       <meshStandardMaterial
         attach="material"

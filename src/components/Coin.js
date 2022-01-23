@@ -6,7 +6,7 @@ const Coin = ({ position }) => {
   const ref = useRef();
 
   return (
-    <mesh position={position} ref={ref}>
+    <mesh position={position} ref={ref} name="Coint">
       <boxBufferGeometry attach="geometry" />
       <meshStandardMaterial attach="material" transparent={true} map={coin} />
     </mesh>

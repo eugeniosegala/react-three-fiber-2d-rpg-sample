@@ -135,9 +135,13 @@ const resolveMapTile = (type, x, y, mapData, setCurrentMap) => {
 
   switch (type) {
     case "#":
-      return <Object key={key} position={[x, 0.5, y]} type="Static" />;
+      return (
+        <Object key={key} position={[x, 0.5, y]} type="Static" name="Wall" />
+      );
     case "T":
-      return <Object key={key} position={[x, 0.5, y]} texture={chest} />;
+      return (
+        <Object key={key} position={[x, 0.5, y]} texture={chest} name="Chest" />
+      );
     case "C":
       return (
         <Coin
