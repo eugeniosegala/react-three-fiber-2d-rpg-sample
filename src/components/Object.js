@@ -12,6 +12,7 @@ const Object = ({ texture, position, name }) => {
         attach="material"
         transparent={true}
         map={texture || wood}
+        depthTest={false}
       />
     </mesh>
   );

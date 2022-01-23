@@ -8,16 +8,7 @@ import {
   playerIdleMovement,
 } from "../utils/textureManager";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
-import calcDistance from "../utils/calcDistance";
-
-function closest(arr, val, fallback) {
-  if (!arr.length) {
-    return fallback;
-  }
-  return arr.reduce((a, b) => {
-    return Math.abs(b - val) < Math.abs(a - val) ? b : a;
-  });
-}
+import { calcDistance, closestObject } from "../utils/calcDistance";
 
 const Player = () => {
   const { moveForward, moveBackward, moveLeft, moveRight } =
@@ -42,7 +33,7 @@ const Player = () => {
     const position = ref.current.position;
 
     const collisions = world.scene.children.filter((e) => {
-      return calcDistance(e.position, position) <= 2 && e.name === "Wall";
+      return calcDistance(e.position, position) <= 2 && e.name === "Blocking";
     });
 
     const topCollisions = collisions.filter((e) => {
@@ -54,7 +45,7 @@ const Player = () => {
     });
 
     const topClosest =
-      closest(
+      closestObject(
         topCollisions.map((e) => e.position.z),
         position.z,
         -9999
@@ -69,7 +60,7 @@ const Player = () => {
     });
 
     const bottomClosest =
-      closest(
+      closestObject(
         bottomCollisions.map((e) => e.position.z),
         position.z,
         9999
@@ -84,7 +75,7 @@ const Player = () => {
     });
 
     const rightClosest =
-      closest(
+      closestObject(
         rightCollisions.map((e) => e.position.x),
         position.x,
         9999
@@ -99,7 +90,7 @@ const Player = () => {
     });
 
     const leftClosest =
-      closest(
+      closestObject(
         leftCollisions.map((e) => e.position.x),
         position.x,
         -9999
