@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+
 import {
   playerUpMovement,
   playerDownMovement,
@@ -9,27 +10,16 @@ import {
 } from "../utils/textureManager";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
 import { calcDistance, closestObject } from "../utils/calcDistance";
+import Attack from "./Attack";
 
 const Player = () => {
-  const { moveForward, moveBackward, moveLeft, moveRight } =
+  const { moveForward, moveBackward, moveLeft, moveRight, action } =
     useKeyboardControls();
 
   const { camera } = useThree();
   const ref = useRef();
 
   useFrame((world) => {
-    /*
-    console.log(
-      JSON.parse(JSON.stringify(ref)).current.object.hasOwnProperty(
-        "matrixAutoUpdate"
-      )
-    );
-    console.log(ref.current.matrixAutoUpdate);
-    raycaster.setFromCamera(vector, camera);
-    const intersects = raycaster.intersectObjects(world.scene.children);
-    console.log(intersects);
-    */
-
     const position = ref.current.position;
 
     const collisions = world.scene.children.filter((e) => {
@@ -131,12 +121,6 @@ const Player = () => {
     camera?.position.set(ref.current.position.x, 5, ref.current.position.z);
   });
 
-  // useFrame(({ clock: { elapsedTime } }) => {
-  //   console.log(elapsedTime);
-  // });
-
-  // console.log(moveForward, moveBackward, moveLeft, moveRight);
-
   const calculateImage = () => {
     if (moveForward) {
       return playerUpMovement;
@@ -166,6 +150,7 @@ const Player = () => {
           transparent={true}
           map={calculateImage()}
         />
+        {action && <Attack />}
       </mesh>
     </>
   );
