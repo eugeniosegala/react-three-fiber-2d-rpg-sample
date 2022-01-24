@@ -11,11 +11,12 @@ const Coin = ({ position }) => {
 
   const ref = useRef();
   const [hide, setHide] = useState(false);
-  const { scene } = useThree();
+  const { scene, camera } = useThree();
 
   const coinControl = useCallback(
     throttle(() => {
       if (!hide) {
+        // ref.current.lookAt(camera.position);
         const position = ref?.current?.position;
 
         // this is supposed to be the first object in the scene: tshe player
@@ -38,8 +39,13 @@ const Coin = ({ position }) => {
   }
 
   return (
-    <mesh position={position} ref={ref} name="Coin">
-      <boxBufferGeometry attach="geometry" />
+    <mesh
+      position={position}
+      ref={ref}
+      name="Coin"
+      rotation={[-Math.PI / 2, 0, 0]}
+    >
+      <planeBufferGeometry attach="geometry" />
       <meshStandardMaterial
         attach="material"
         transparent={true}
