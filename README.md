@@ -1,4 +1,4 @@
-# react-three-2d-rpg-sandbox
+# react-three-fiber-2d-rpg-template
 
 Simple 2D RPG video-game based on Three JS.
 
