@@ -1,35 +1,57 @@
-import React from "react";
-import { useBox } from "@react-three/cannon";
+import React, { useCallback, useRef, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import throttle from "lodash-es/throttle";
 
 import { coin } from "../utils/textureManager";
 import coinSound from "../sounds/coin.wav";
+import { calcDistance } from "../utils/calcDistance";
 
-const Coin = ({ position, mapData, setCurrentMap }) => {
+const Coin = ({ position }) => {
   const sound = new Audio(coinSound);
-  const [ref, api] = useBox(() => ({
-    isTrigger: true,
-    fixedRotation: true,
-    args: [0.5, 0.5, 0.5],
-    position,
-    onCollide: handleOnCollide,
-  }));
 
-  const handleOnCollide = async () => {
-    await sound.play();
-    // let newMapData = [...mapData];
-    // newMapData[position[2]][position[0]] = "·";
-    // setCurrentMap(newMapData);
-    // moving the element is way more performant than deleting it (using cannon)
-    api.position.set(position[0], -5, position[2]);
-    api.sleep();
-  };
+  const ref = useRef();
+  const [hide, setHide] = useState(false);
+  const { scene, camera } = useThree();
 
-  // const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
+  const coinControl = useCallback(
+    throttle(() => {
+      if (!hide) {
+        // ref.current.lookAt(camera.position);
+        const position = ref?.current?.position;
+
+        // this is supposed to be the first object in the scene: tshe player
+        const collision =
+          calcDistance(scene.children[0].position, position) < 1;
+
+        if (collision) {
+          sound.play();
+          setHide(true);
+        }
+      }
+    }, 100),
+    [hide]
+  );
+
+  useFrame(coinControl);
+
+  if (hide) {
+    return null;
+  }
 
   return (
-    <mesh {...{ position, ref }}>
-      <boxBufferGeometry attach="geometry" />
-      <meshStandardMaterial attach="material" transparent={true} map={coin} />
+    <mesh
+      position={position}
+      ref={ref}
+      name="Coin"
+      rotation={[-Math.PI / 2, 0, 0]}
+    >
+      <planeBufferGeometry attach="geometry" />
+      <meshStandardMaterial
+        attach="material"
+        transparent={true}
+        map={coin}
+        depthTest={false}
+      />
     </mesh>
   );
 };

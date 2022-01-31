@@ -1,24 +1,18 @@
-import React from "react";
-import { useBox } from "@react-three/cannon";
+import React, { useRef } from "react";
 
 import { wood } from "../utils/textureManager";
 
-const Object = ({ position, type, texture, onCollide }) => {
-  const [ref] = useBox(() => ({
-    fixedRotation: true,
-    mass: 1,
-    position,
-    type: type || "Dynamic",
-    onCollide,
-  }));
+const Object = ({ texture, position, name }) => {
+  const ref = useRef();
 
   return (
-    <mesh ref={ref}>
+    <mesh ref={ref} position={position} name={name}>
       <boxBufferGeometry attach="geometry" />
       <meshStandardMaterial
         attach="material"
         transparent={true}
         map={texture || wood}
+        depthTest={false}
       />
     </mesh>
   );

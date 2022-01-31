@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Canvas } from "@react-three/fiber";
-import { Physics } from "@react-three/cannon";
 import { useProgress } from "@react-three/drei";
 
 import SampleLevel from "./levels/SampleLevel";
@@ -20,15 +19,7 @@ const Game = () => {
       {/* <Loader /> */}
       <PhysicalMovements />
       <Canvas orthographic camera={{ zoom: 50, position: [0, 5, 0] }}>
-        <Physics
-          broadphase="SAP"
-          defaultContactMaterial={{
-            contactEquationRelaxation: 4,
-            friction: 0.05,
-          }}
-        >
-          <SampleLevel />
-        </Physics>
+        <SampleLevel />
       </Canvas>
     </>
   );

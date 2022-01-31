@@ -33,9 +33,23 @@ const resolveMapTile = (type, x, y, mapData, setCurrentMap) => {
 
   switch (type) {
     case "#":
-      return <Object key={key} position={[x, 0.5, y]} type="Static" />;
+      return (
+        <Object
+          key={key}
+          position={[x, 0.5, y]}
+          type="Static"
+          name="Blocking"
+        />
+      );
     case "T":
-      return <Object key={key} position={[x, 0.5, y]} texture={chest} />;
+      return (
+        <Object
+          key={key}
+          position={[x, 0.5, y]}
+          texture={chest}
+          name="Blocking"
+        />
+      );
     case "C":
       return (
         <Coin
@@ -67,28 +81,33 @@ const SampleLevel = () => {
 
   return (
     <>
-      <ambientLight intensity={0.1} />
-      <Plane position={[0, 0, 0]} colour={colour} />
       <Player />
+      <Plane position={[0, 0, 0]} colour={colour} />
+      <ambientLight intensity={0.1} />
       {memoizedMapData}
-      {/* Elements outside mapData */}
-      <Object
-        position={[10, 0.5, 20]}
-        onCollide={(e) => {
-          if (e.body.name === "Player") {
-            setColour("#D4AC2B");
-          }
-        }}
-        texture={orb}
+      <Object position={[10, 0.5, 20]} texture={orb} />
+      <pointLight
+        position={[10, 1.1, 20]}
+        intensity={3}
+        castShadow={true}
+        penumbra={1}
+        color="blue"
       />
-      <Object
-        position={[20, 0.5, 20]}
-        onCollide={(e) => {
-          if (e.body.name === "Player") {
-            setColour("#ff45ab");
-          }
-        }}
-        texture={orb}
+      <Object position={[20, 0.5, 20]} texture={orb} />
+      <pointLight
+        position={[20, 1.1, 20]}
+        intensity={3}
+        castShadow={true}
+        penumbra={1}
+        color="blue"
+      />
+      <rectAreaLight
+        position={[38.5, 1, 11]}
+        intensity={5}
+        castShadow={true}
+        penumbra={1}
+        width={1}
+        rotation={[0, 20.4, 0]}
       />
       <spotLight
         position={[10, 10, 10]}

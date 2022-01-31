@@ -1,9 +1,14 @@
-import { usePlane } from "@react-three/cannon";
+import React, { useRef } from "react";
 
 const Plane = (props) => {
-  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }));
+  const ref = useRef();
   return (
-    <mesh ref={ref} name="plane">
+    <mesh
+      position={props.position}
+      rotation={[-Math.PI / 2, 0, 0]}
+      ref={ref}
+      name="plane"
+    >
       <planeBufferGeometry attach="geometry" args={[200, 200]} />
       <meshStandardMaterial attach="material" color={props.colour} />
     </mesh>

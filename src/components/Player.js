@@ -1,6 +1,6 @@
-import { Vector3 } from "three";
-import { useBox } from "@react-three/cannon";
+import React, { useRef, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import throttle from "lodash-es/throttle";
 
 import {
   playerUpMovement,
@@ -10,52 +10,121 @@ import {
   playerIdleMovement,
 } from "../utils/textureManager";
 import { useKeyboardControls } from "../hooks/useKeyboardControls";
+import { calcDistance, closestObject } from "../utils/calcDistance";
 import Attack from "./Attack";
-
-const vector = new Vector3();
 
 const Player = () => {
   const { moveForward, moveBackward, moveLeft, moveRight, action } =
     useKeyboardControls();
 
-  const [ref, api] = useBox(() => ({
-    fixedRotation: true,
-    mass: 1,
-    position: [2, 0.5, 2],
-  }));
+  const { camera, scene } = useThree();
+  const ref = useRef();
 
-  const { camera } = useThree();
+  const positionControl = useCallback(
+    throttle(() => {
+      const position = ref.current.position;
+      const collisions = scene.children.filter((e) => {
+        return calcDistance(e.position, position) <= 2 && e.name === "Blocking";
+      });
 
-  // api.position.subscribe((e) => {
-  //   camera?.position.set(e[0], 5, e[2]);
-  // });
+      const topCollisions = collisions.filter((e) => {
+        return (
+          (e.position.x === Math.ceil(position.x) ||
+            e.position.x === Math.floor(position.x)) &&
+          e.position.z <= position.z
+        );
+      });
 
-  useFrame(() => {
-    const obj = ref.current.getWorldPosition(vector);
+      const topClosest =
+        closestObject(
+          topCollisions.map((e) => e.position.z),
+          position.z,
+          -9999
+        ) + 1;
 
-    // check is player is ready
-    /*
-    console.log(
-      JSON.parse(JSON.stringify(ref)).current.object.hasOwnProperty(
-        "matrixAutoUpdate"
-      )
-    );
-    console.log(ref.current.matrixAutoUpdate);
-    */
+      const bottomCollisions = collisions.filter((e) => {
+        return (
+          (e.position.x === Math.ceil(position.x) ||
+            e.position.x === Math.floor(position.x)) &&
+          e.position.z >= position.z
+        );
+      });
 
-    if (moveForward || moveBackward || moveRight || moveLeft) {
-      api.velocity.set(moveRight || moveLeft, 0, moveForward || moveBackward);
-    }
+      const bottomClosest =
+        closestObject(
+          bottomCollisions.map((e) => e.position.z),
+          position.z,
+          9999
+        ) - 1;
 
-    camera?.position.set(obj.x, 5, obj.z);
-    // api.rotation.set(0, 0, 0);
-  });
+      const rightCollisions = collisions.filter((e) => {
+        return (
+          (e.position.z === Math.ceil(position.z) ||
+            e.position.z === Math.floor(position.z)) &&
+          e.position.x >= position.x
+        );
+      });
 
-  // useFrame(({ clock: { elapsedTime } }) => {
-  //   console.log(elapsedTime);
-  // });
+      const rightClosest =
+        closestObject(
+          rightCollisions.map((e) => e.position.x),
+          position.x,
+          9999
+        ) - 1;
 
-  // console.log(moveForward, moveBackward, moveLeft, moveRight);
+      const leftCollisions = collisions.filter((e) => {
+        return (
+          (e.position.z === Math.ceil(position.z) ||
+            e.position.z === Math.floor(position.z)) &&
+          e.position.x <= position.x
+        );
+      });
+
+      const leftClosest =
+        closestObject(
+          leftCollisions.map((e) => e.position.x),
+          position.x,
+          -9999
+        ) + 1;
+
+      if (ref.current.position.z > topClosest) {
+        if (moveForward) {
+          ref.current.position.z = Number(
+            (ref.current.position.z - 0.1).toFixed(2)
+          );
+        }
+      }
+
+      if (ref.current.position.z < bottomClosest) {
+        if (moveBackward) {
+          ref.current.position.z = Number(
+            (ref.current.position.z + 0.1).toFixed(2)
+          );
+        }
+      }
+
+      if (ref.current.position.x < rightClosest) {
+        if (moveRight) {
+          ref.current.position.x = Number(
+            (ref.current.position.x + 0.1).toFixed(2)
+          );
+        }
+      }
+
+      if (ref.current.position.x > leftClosest) {
+        if (moveLeft) {
+          ref.current.position.x = Number(
+            (ref.current.position.x - 0.1).toFixed(2)
+          );
+        }
+      }
+
+      camera?.position.set(ref.current.position.x, 5, ref.current.position.z);
+    }, 5),
+    [moveForward, moveBackward, moveRight, moveLeft]
+  );
+
+  useFrame(positionControl);
 
   const calculateImage = () => {
     if (moveForward) {
@@ -79,22 +148,15 @@ const Player = () => {
 
   return (
     <>
-      <mesh ref={ref} name="Player">
+      <mesh position={[2, 0.5, 2]} ref={ref} name="Player">
         <boxBufferGeometry attach="geometry" />
         <meshStandardMaterial
           attach="material"
           transparent={true}
           map={calculateImage()}
         />
+        {action && <Attack />}
       </mesh>
-      <Attack
-        moveForward={moveForward}
-        moveBackward={moveBackward}
-        moveLeft={moveLeft}
-        moveRight={moveRight}
-        action={action}
-        camera={camera}
-      />
     </>
   );
 };
