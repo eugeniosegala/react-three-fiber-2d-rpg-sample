@@ -6,6 +6,6 @@ Demo: https://elated-stonebraker-1ba3c9.netlify.app/
 
 Movements: WASD
 
-Shoot: spacebar
+Attack: spacebar
 
 Sprites are generated using https://www.piskelapp.com/
